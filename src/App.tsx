@@ -44,7 +44,7 @@ const HeartsOverlay = memo(() => {
   return (
     <>
       <style>{`
-        .hearts-container { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 10; }
+        .hearts-container { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
         .heart { position: absolute; bottom: -10vh; will-change: transform, opacity; transform: translateZ(0); animation-name: float-up; animation-timing-function: linear; animation-iteration-count: infinite; color: #ff6b9d; filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.6)); }
         .heart-text { font-family: 'Georgia', serif; font-weight: 600; text-shadow: 0 0 10px rgba(255, 107, 157, 0.8); }
         @keyframes float-up {

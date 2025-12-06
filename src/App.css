@@ -540,6 +540,7 @@ body {
 .flowers {
   position: relative;
   transform: scale(0.9);
+  z-index: 50;
 }
 
 @media only screen and (max-width: 600px) {
@@ -556,7 +557,7 @@ body {
   position: absolute;
   bottom: 10vmin;
   transform-origin: bottom center;
-  z-index: 10;
+  z-index: 100;
   --fl-speed: 0.9s;
 }
 
