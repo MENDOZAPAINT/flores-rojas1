@@ -160,7 +160,7 @@ body {
   filter: blur(0.1vmin);
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.897), rgba(0, 0, 0, 0.849)),
-    /* url('./assets/Dannia.png'), */
+    url('./assets/Dannia.png'),
     radial-gradient(ellipse at top,
       transparent 0%,
       var(--dark-color)),
@@ -743,19 +743,19 @@ body {
   height: 11vmin;
   border-radius: 51% 49% 47% 53%/44% 45% 55% 69%;
   background: radial-gradient(ellipse at 30% 20%,
-      #ff6b6b 0%,
-      #ff4757 25%,
-      #ee0a24 50%,
-      #c0392b 75%,
-      #8b0000 100%);
+      #e85d75 0%,
+      #dc143c 25%,
+      #c41e3a 50%,
+      #a91d2e 75%,
+      #8b1a1a 100%);
   transform-origin: bottom center;
-  opacity: 0.95;
+  opacity: 0.93;
   box-shadow:
-    inset -2vmin -1vmin 3vmin rgba(139, 0, 0, 0.4),
-    inset 1vmin 1vmin 2vmin rgba(255, 107, 107, 0.6),
-    0 0.5vmin 1.5vmin rgba(238, 10, 36, 0.5),
+    inset -2vmin -1vmin 3vmin rgba(139, 26, 26, 0.4),
+    inset 1vmin 1vmin 2vmin rgba(232, 93, 117, 0.5),
+    0 0.5vmin 1.5vmin rgba(196, 30, 58, 0.45),
     0 1vmin 3vmin rgba(0, 0, 0, 0.3);
-  filter: saturate(1.2) brightness(1.1);
+  filter: saturate(1.0) brightness(0.95);
 }
 
 .flower__leaf--1 {
@@ -777,9 +777,9 @@ body {
   border-radius: 4vmin 10vmin 4vmin 4vmin;
   transform: translate(0%, 18%) rotateX(70deg) rotate(-43deg);
   background: linear-gradient(135deg,
-      #8b0000 0%,
-      #a52a2a 50%,
-      #6b0000 100%);
+      #8b1a1a 0%,
+      #a91d2e 50%,
+      #6d1515 100%);
   z-index: 1;
   opacity: 0.85;
   box-shadow:

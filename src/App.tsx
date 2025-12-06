@@ -1,27 +1,42 @@
 import { useEffect, useMemo, useRef, useState, memo } from 'react'
 import { gsap } from 'gsap'
+import { Flower, Flower2, Cherry, Leaf, Sparkles } from 'lucide-react'
 import './App.css'
-import audioFile from './assets/xd.mp3'
+import audioFile from './assets/Bad.mp3'
 
 // Componente memoizado y estable (fuera de App) para evitar remounts y parpadeos
 const HeartsOverlay = memo(() => {
   const hearts = useMemo(() => {
-    const emojis = ['🌹', '🌺', '🌸', '🌷', '🏵️']
+    // Mezcla de iconos SVG y texto
+    type ItemType =
+      | { type: 'component'; Component: React.ComponentType<{ size: number; strokeWidth: number }> }
+      | { type: 'text'; text: string }
+
+    const items: ItemType[] = [
+      { type: 'component', Component: Flower },
+      { type: 'component', Component: Flower2 },
+      { type: 'component', Component: Cherry },
+      { type: 'text', text: 'Dannia' },
+      { type: 'component', Component: Leaf },
+      { type: 'component', Component: Sparkles },
+    ]
+
     return Array.from({ length: 36 }).map((_, idx) => {
       const left = Math.random() * 100
       const size = 16 + Math.random() * 28
       const duration = 10 + Math.random() * 12
       const delay = Math.random() * 8
-      const emoji = emojis[idx % emojis.length]
+      const item = items[idx % items.length]
+
       return {
         id: `heart-${idx}-${Math.random().toString(36).slice(2, 7)}`,
         style: {
           left: `${left}%`,
-          fontSize: `${size}px`,
           animationDuration: `${duration}s`,
           animationDelay: `${delay}s`,
         },
-        emoji,
+        size,
+        item,
       }
     })
   }, [])
@@ -30,17 +45,25 @@ const HeartsOverlay = memo(() => {
     <>
       <style>{`
         .hearts-container { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 10; }
-        .heart { position: absolute; bottom: -10vh; will-change: transform, opacity; transform: translateZ(0); animation-name: float-up; animation-timing-function: linear; animation-iteration-count: infinite; }
+        .heart { position: absolute; bottom: -10vh; will-change: transform, opacity; transform: translateZ(0); animation-name: float-up; animation-timing-function: linear; animation-iteration-count: infinite; color: #ff6b9d; filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.6)); }
+        .heart-text { font-family: 'Georgia', serif; font-weight: 600; text-shadow: 0 0 10px rgba(255, 107, 157, 0.8); }
         @keyframes float-up {
-          0% { transform: translateY(0) scale(1); opacity: 0; }
+          0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0; }
           10% { opacity: 0.9; }
-          100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+          100% { transform: translateY(-120vh) scale(1.2) rotate(360deg); opacity: 0; }
         }
       `}</style>
       <div className="hearts-container" aria-hidden="true">
         {hearts.map((h) => (
-          <div key={h.id} className="heart" style={h.style}>{h.emoji}</div>
-
+          <div key={h.id} className="heart" style={h.style}>
+            {h.item.type === 'component' ? (
+              <h.item.Component size={h.size} strokeWidth={1.5} />
+            ) : (
+              <span className="heart-text" style={{ fontSize: `${h.size}px` }}>
+                {h.item.text}
+              </span>
+            )}
+          </div>
         ))}
       </div>
     </>
@@ -143,8 +166,8 @@ function App() {
 
   // Typewriter effect with GSAP
   useEffect(() => {
-    const leftText = "          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque soluta voluptatum praesentium ex id vitae voluptates numquam incidunt veritatis quia ratione odit, officiis quod hic error dolor mollitia deserunt sint"
-    const rightText = "          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque soluta voluptatum praesentium ex id vitae voluptates numquam incidunt veritatis quia ratione odit, officiis quod hic error dolor mollitia deserunt sint"
+    const leftText = ""
+    const rightText = ""
 
     // Clear initial text
     if (leftTextRef.current) leftTextRef.current.textContent = ""
@@ -264,7 +287,7 @@ function App() {
   return (
     <>
       <div className="night" ></div>
-      <h1 className="main-title" ref={titleRef}>xd</h1>
+      <h1 className="main-title" ref={titleRef}>❤️</h1>
       {/* Múltiples corazones que se mueven */}
       <HeartsOverlay />
 
