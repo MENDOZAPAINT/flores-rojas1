@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, memo } from 'react'
 import { gsap } from 'gsap'
 import './App.css'
-import audioFile from './assets/Bad.mp3'
+import audioFile from './assets/xd.mp3'
 
 // Componente memoizado y estable (fuera de App) para evitar remounts y parpadeos
 const HeartsOverlay = memo(() => {
@@ -295,7 +295,7 @@ function App() {
   return (
     <>
       <div className="night" ></div>
-      <h1 className="main-title" ref={titleRef}>name</h1>
+      <h1 className="main-title" ref={titleRef}>xd</h1>
       {/* Múltiples corazones que se mueven */}
       <HeartsOverlay />
 
