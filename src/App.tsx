@@ -54,7 +54,6 @@ function App() {
   const sparklesRef = useRef<HTMLDivElement>(null)
   const audioRef = useRef<HTMLAudioElement>(null)
   const lastTimeUpdateRef = useRef(0)
-  const repeatRemainingRef = useRef(0)
 
   // Estados para el reproductor personalizado
   const [isPlaying, setIsPlaying] = useState(false)
@@ -62,7 +61,6 @@ function App() {
   const [duration, setDuration] = useState(0)
   const [volume, setVolume] = useState(1)
   const [isMuted, setIsMuted] = useState(false)
-  const [, setPlayCount] = useState(0)
 
   const flowerConfigs = [
     { id: 1, leafsVariant: 1, lineLeafCount: 6 },
@@ -90,9 +88,6 @@ function App() {
     if (isPlaying) {
       audio.pause()
     } else {
-      // Iniciar sesión de reproducción: 3 reproducciones en total (2 repeticiones después de la actual)
-      repeatRemainingRef.current = 2
-      setPlayCount(0)
       audio.play()
         .then(() => setIsPlaying(true))
         .catch(console.error)
@@ -257,33 +252,7 @@ function App() {
         audioRef.current.volume = volume
         audioRef.current.muted = isMuted
 
-        // Autoplay deshabilitado: solo se reproducirá al pulsar Play
         return
-
-        // Intentar reproducir (deshabilitado)
-        // const playPromise = audioRef.current.play()
-        // if (playPromise !== undefined) {
-        //   playPromise
-        //     .then(() => {
-        //       console.log('Audio iniciado automáticamente')
-        //       setIsPlaying(true)
-        //     })
-        //     .catch(() => {
-        //       console.log('Auto-play bloqueado, se reproducirá con interacción del usuario')
-        //       setIsPlaying(false)
-        //       const startAudio = () => {
-        //         if (audioRef.current) {
-        //           audioRef.current.play()
-        //             .then(() => setIsPlaying(true))
-        //             .catch(() => { })
-        //         }
-        //         document.removeEventListener('click', startAudio, true)
-        //         document.removeEventListener('touchstart', startAudio, true)
-        //       }
-        //       document.addEventListener('click', startAudio, true)
-        //       document.addEventListener('touchstart', startAudio, true)
-        //     })
-        // }
       }
     }
 
@@ -328,18 +297,8 @@ function App() {
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}
           onEnded={() => {
-            // Aumentar contador de reproducciones completadas en esta sesión
-            setPlayCount(prev => prev + 1)
-            const audio = audioRef.current
-            if (audio && repeatRemainingRef.current > 0) {
-              repeatRemainingRef.current -= 1
-              audio.currentTime = 0
-              audio.play()
-                .then(() => setIsPlaying(true))
-                .catch(console.error)
-            } else {
-              setIsPlaying(false)
-            }
+            // Cuando termina de reproducirse, pausar el audio
+            setIsPlaying(false)
           }}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
