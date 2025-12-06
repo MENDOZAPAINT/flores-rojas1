@@ -186,69 +186,104 @@ function App() {
       })
     }
 
-    // Eye-catching title animation
-    // Eye-catching title animation
+    // Heartbeat animation for the title
     if (titleRef.current) {
       const tl = gsap.timeline()
 
-      // Initial state - more dramatic
+      // Initial state
       gsap.set(titleRef.current, {
         opacity: 0,
-        scale: 0.1,
-        rotationY: -360,
-        rotationX: 45,
-        z: -200,
-        filter: "blur(20px) brightness(0.3)",
-        textShadow: "none"
+        scale: 0.5,
       })
 
-      tl
-        // Dramatic entrance with 3D rotation and color burst
+      // Fade in
+      tl.to(titleRef.current, {
+        delay: 0.5,
+        duration: 1,
+        opacity: 1,
+        scale: 1,
+        ease: "power2.out"
+      })
+
+        // Heartbeat animation - realistic double beat pattern (lub-dub)
         .to(titleRef.current, {
-          delay: 1,
-          duration: 2,
-          opacity: 1,
+          delay: 0.5,
+          duration: 0.15,
           scale: 1.3,
-          rotationY: 0,
-          rotationX: 0,
-          z: 0,
-          filter: "blur(0px) brightness(1.2) saturate(1.5)",
-          textShadow: "0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 255, 255, 0.8), 0 0 90px rgba(255, 215, 0, 0.6), 0 0 120px rgba(255, 255, 255, 0.4)",
-          ease: "power4.out"
+          textShadow: "0 0 30px rgba(255, 0, 0, 1), 0 0 60px rgba(255, 0, 0, 0.8), 0 0 90px rgba(255, 0, 0, 0.6)",
+          ease: "power2.out"
         })
-        // Elastic bounce back with color transition
         .to(titleRef.current, {
-          duration: 1.2,
+          duration: 0.15,
           scale: 1,
-          filter: "brightness(1) saturate(1)",
-          textShadow: "0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.6), 0 0 80px rgba(255, 215, 0, 0.3)",
-          ease: "elastic.out(1.2, 0.4)"
+          textShadow: "0 0 20px rgba(255, 0, 0, 0.8), 0 0 40px rgba(255, 0, 0, 0.6), 0 0 60px rgba(255, 0, 0, 0.4)",
+          ease: "power2.in"
         })
-        // Enhanced continuous glow pulse with color cycling
+        // Second beat (dub)
         .to(titleRef.current, {
-          duration: 3,
-          textShadow: "0 0 25px rgba(255, 255, 255, 1.2), 0 0 50px rgba(255, 215, 0, 0.9), 0 0 75px rgba(255, 255, 255, 0.7), 0 0 100px rgba(255, 215, 0, 0.5), 0 0 125px rgba(255, 255, 255, 0.3)",
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut"
-        }, "-=0.8")
-        // Multi-layered floating with subtle rotation
+          duration: 0.15,
+          scale: 1.25,
+          textShadow: "0 0 30px rgba(255, 0, 0, 1), 0 0 60px rgba(255, 0, 0, 0.8), 0 0 90px rgba(255, 0, 0, 0.6)",
+          ease: "power2.out"
+        })
         .to(titleRef.current, {
-          duration: 6,
-          y: -15,
-          rotationZ: 2,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut"
-        }, "-=3")
-        // Subtle scale breathing effect
+          duration: 0.15,
+          scale: 1,
+          textShadow: "0 0 20px rgba(255, 0, 0, 0.8), 0 0 40px rgba(255, 0, 0, 0.6), 0 0 60px rgba(255, 0, 0, 0.4)",
+          ease: "power2.in"
+        })
+        // Pause between heartbeats
         .to(titleRef.current, {
-          duration: 4,
-          scale: 1.02,
-          repeat: -1,
-          yoyo: true,
-          ease: "power2.inOut"
-        }, "-=4")
+          duration: 0.4,
+          scale: 1,
+          textShadow: "0 0 15px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.4), 0 0 45px rgba(255, 0, 0, 0.2)",
+        })
+        // Repeat the heartbeat infinitely
+        .call(() => {
+          gsap.to(titleRef.current, {
+            duration: 0.15,
+            scale: 1.3,
+            textShadow: "0 0 30px rgba(255, 0, 0, 1), 0 0 60px rgba(255, 0, 0, 0.8), 0 0 90px rgba(255, 0, 0, 0.6)",
+            ease: "power2.out",
+            yoyo: true,
+            repeat: 1,
+            repeatDelay: 0,
+            onComplete: () => {
+              gsap.to(titleRef.current, {
+                duration: 0.4,
+                scale: 1,
+                textShadow: "0 0 15px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.4), 0 0 45px rgba(255, 0, 0, 0.2)",
+                ease: "power2.inOut",
+                delay: 0,
+                onComplete: () => {
+                  // Recursively call the heartbeat
+                  const heartbeat = () => {
+                    gsap.to(titleRef.current, {
+                      duration: 0.15,
+                      scale: 1.3,
+                      textShadow: "0 0 30px rgba(255, 0, 0, 1), 0 0 60px rgba(255, 0, 0, 0.8), 0 0 90px rgba(255, 0, 0, 0.6)",
+                      ease: "power2.out",
+                      yoyo: true,
+                      repeat: 1,
+                      repeatDelay: 0,
+                      onComplete: () => {
+                        gsap.to(titleRef.current, {
+                          duration: 0.4,
+                          scale: 1,
+                          textShadow: "0 0 15px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.4), 0 0 45px rgba(255, 0, 0, 0.2)",
+                          ease: "power2.inOut",
+                          delay: 0.4,
+                          onComplete: heartbeat
+                        })
+                      }
+                    })
+                  }
+                  heartbeat()
+                }
+              })
+            }
+          })
+        })
     }
 
     // Calculate duration for left text
